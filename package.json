@@ -1,0 +1,18 @@
+{
+  "name": "folder-to-html",
+  "version": "0.1.0",
+  "description": "Generate static HTML overview of folder.",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js",
+    "insp": "nodemon inspect app.js"
+  },
+  "author": "Alexander Saburov",
+  "license": "MIT",
+  "dependencies": {
+    "directory-tree": "^2.1.0",
+    "less": "^3.5.2",
+    "nodemon": "^1.17.5",
+    "twig": "^1.12.0"
+  }
+}

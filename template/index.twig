@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu:400,500&amp;subset=cyrillic" rel="stylesheet">
+    <style>
+      {{ less }}
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="h1">
+        Список файлов
+      </h1>
+      <div class="list">
+        {{ list }}
+      </div>
+    </div>
+    <script>
+
+      let list = document.querySelector('.list');
+      list.addEventListener('click', function(e) {
+        let el = e.target.closest('.list-el__description');
+        if (el) {
+          let parent = el.parentNode;
+          if (parent.classList.contains('list-el_folder')) {
+            parent.classList.toggle('list-el_folder-open')
+            e.preventDefault();
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
