@@ -9,7 +9,7 @@ const writeFile = util.promisify(fs.writeFile);
 const twigRender = util.promisify(Twig.renderFile);
 
 function Overview({ folder = '/', extensions, exclude, fileName = 'index.html' } = {}) {
-  let path_to_folder = path.join(__dirname, folder);
+  let path_to_folder = path.normalize(folder);
   let path_to_style = path.join(__dirname, '/style/style.less');
   let path_to_index = path.join(__dirname, './template/index.twig');
   let path_to_list_el = path.join(__dirname, './template/list-el.twig');
