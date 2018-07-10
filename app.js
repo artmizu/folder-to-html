@@ -8,11 +8,11 @@ const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
 const twigRender = util.promisify(Twig.renderFile);
 
-function Overview({ folder = './', extensions, exclude, fileName = 'index.html' } = {}) {
-  let path_to_folder = path.normalize(folder);
-  let path_to_style = path.normalize('./style/style.less');
-  let path_to_index = path.normalize('./template/index.twig');
-  let path_to_list_el = path.normalize('./template/list-el.twig');
+function Overview({ folder = '/', extensions, exclude, fileName = 'index.html' } = {}) {
+  let path_to_folder = path.join(__dirname, folder);
+  let path_to_style = path.join(__dirname, '/style/style.less');
+  let path_to_index = path.join(__dirname, './template/index.twig');
+  let path_to_list_el = path.join(__dirname, './template/list-el.twig');
   let opts = { extensions, exclude };
 
   async function render() {
@@ -84,4 +84,3 @@ exports.directoryOverview = Overview;
 
 // TODO добавить обработчики ошибок
 // TODO добавить тесты
-// TODO часть зависимостей в dev dependencies?
