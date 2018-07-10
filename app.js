@@ -76,11 +76,12 @@ function Overview({ folder = '/', extensions, exclude, fileName = 'index.html' }
   render();
 }
 
-Overview({
-  exclude: /node_modules/
-});
+// Overview({
+//   exclude: /node_modules/
+// });
 
 exports.directoryOverview = Overview;
 
 // TODO добавить обработчики ошибок
 // TODO добавить тесты
+// TODO вынести тестирование генерации от сюда
