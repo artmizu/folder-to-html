@@ -1,6 +1,6 @@
 {
   "name": "folder-to-html",
-  "version": "0.1.2",
+  "version": "0.1.4",
   "description": "Generate static HTML overview of folder.",
   "scripts": {
     "start": "nodemon example.js",
@@ -13,5 +13,13 @@
     "less": "^3.5.2",
     "nodemon": "^1.17.5",
     "twig": "^1.12.0"
-  }
+  },
+  "bugs": {
+    "url":"https://github.com/artmizu/folder-to-html/issues"
+  },
+  "homepage":"https://github.com/artmizu/folder-to-html",
+  "keywords": [
+    "folder",
+    "HTML"
+  ]
 }
