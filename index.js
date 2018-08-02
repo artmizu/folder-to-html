@@ -8,14 +8,20 @@ const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
 const twigRender = util.promisify(Twig.renderFile);
 
-function Overview({ folder = '/', extensions, exclude, fileName = 'index.html' } = {}) {
+function Overview({ folder = './', extensions, exclude, fileName = 'index.html', returnHTML = false } = {}) {
+  if (typeof folder !== "string") {
+    throw new Error (
+      '"folder" option must be a string'
+    )
+  }
+
   let path_to_folder = path.normalize(folder);
   let path_to_style = path.join(__dirname, '/style/style.less');
   let path_to_index = path.join(__dirname, './template/index.twig');
   let path_to_list_el = path.join(__dirname, './template/list-el.twig');
   let opts = { extensions, exclude };
 
-  async function render() {
+  async function getPage() {
     let data = await Promise.all([
       getStyles(),
       getList(dirTree(path_to_folder, opts).children),
@@ -25,7 +31,7 @@ function Overview({ folder = '/', extensions, exclude, fileName = 'index.html' }
         list: data[1],
       }
     );
-    generateOutputFile(html);
+    return html;
   }
 
   async function getStyles() {
@@ -34,16 +40,24 @@ function Overview({ folder = '/', extensions, exclude, fileName = 'index.html' }
     return css;
   }
 
-  function generateOutputFile(html) {
-    writeFile(fileName, html, 'utf8');
-  }
-
   async function getList(arr) {
     arr.sort(sortFileAndFolders);
     arr = await Promise.all(arr.map(async (item) => {
       return await getListEl(item);
     }));
     return arr.join('');
+  }
+
+  function sortFileAndFolders(a, b) {
+    if (a.type === 'directory' && b.type === 'directory') {
+      return 0;
+    } else if (a.type === 'directory') {
+      return -1;
+    } else if (b.type === 'directory') {
+      return 1;
+    } else {
+      return 0;
+    }
   }
 
   async function getListEl(el) {
@@ -61,27 +75,19 @@ function Overview({ folder = '/', extensions, exclude, fileName = 'index.html' }
     return html;
   }
 
-  function sortFileAndFolders(a, b) {
-    if (a.type === 'directory' && b.type === 'directory') {
-      return 0;
-    } else if (a.type === 'directory') {
-      return -1;
-    } else if (b.type === 'directory') {
-      return 1;
-    } else {
-      return 0;
-    }
+  function generateOutputFile(html) {
+    writeFile(fileName, html, 'utf8');
   }
 
-  render();
+  getPage().then((html) => {
+    if (returnHTML) {
+      return html;
+    } else {
+      generateOutputFile(html);
+    }
+  });
 }
 
-// Overview({
-//   exclude: /node_modules/
-// });
+module.exports = Overview;
 
-exports.directoryOverview = Overview;
-
-// TODO добавить обработчики ошибок
 // TODO добавить тесты
-// TODO вынести тестирование генерации от сюда

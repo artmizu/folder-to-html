@@ -2,10 +2,9 @@
   "name": "folder-to-html",
   "version": "0.1.2",
   "description": "Generate static HTML overview of folder.",
-  "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js",
-    "insp": "nodemon inspect app.js"
+    "start": "nodemon example.js",
+    "insp": "nodemon inspect example.js"
   },
   "author": "Alexander Saburov",
   "license": "MIT",
